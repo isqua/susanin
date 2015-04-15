@@ -568,13 +568,17 @@
      * @param [_options]
      * @returns {Route}
      */
-    Router.prototype.addRoute = function(options, _options) {
+    Router.prototype.addRoute = function(options, _options, params) {
         var route,
             name;
 
         route = new Route(options, _options);
 
-        this._routes.push(route);
+        if (params && params.reverse) {
+            this._routes.unshift(route);
+        } else {
+            this._routes.push(route);
+        }
         name = route.getName();
         name && (this._routesByName[name] = route);
 
